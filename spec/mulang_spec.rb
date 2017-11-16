@@ -5,18 +5,24 @@ describe Mulang::Code do
     let(:code) { Mulang::Code.new(Mulang::Language::Native.new('JavaScript'), 'x = 1') }
 
     it { expect(code.ast).to eq "tag"=>"Assignment", "contents"=>["x", {"tag"=>"MuNumber", "contents"=>1}] }
+    it { expect(code.analyse expectations: [], smellsSet: { tag: 'NoSmells' }). to eq 'tag'=>'AnalysisCompleted',
+                                                                                      'intermediateLanguage'=>nil,
+                                                                                      'signatures'=>[],
+                                                                                      'smells'=>[],
+                                                                                      'expectationResults'=>[] }
+
   end
 
   context 'when language is lowercase' do
     let(:code) { Mulang::Code.new(Mulang::Language::Native.new('Haskell'), 'x = 1') }
 
-    it { expect(code.ast).to eq "tag"=>"Variable", "contents"=>["x", {"tag"=>"MuNumber", "contents"=>1}] }
+    it { expect(code.ast).to eq 'tag'=>'Variable', 'contents'=>['x', {'tag'=>'MuNumber', 'contents'=>1}] }
   end
 
   context 'when code is well-formed' do
     let(:code) { Mulang::Code.new(Mulang::Language::Native.new('Haskell'), 'x = 1') }
 
-    it { expect(code.ast).to eq "tag"=>"Variable", "contents"=>["x", {"tag"=>"MuNumber", "contents"=>1}] }
+    it { expect(code.ast).to eq 'tag'=>'Variable', 'contents'=>['x', {'tag'=>'MuNumber', 'contents'=>1}] }
   end
 
   context 'when code is ill-formed' do

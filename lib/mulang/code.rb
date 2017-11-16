@@ -12,5 +12,13 @@ module Mulang
     def sample
       @language.sample @content
     end
+
+    def analysis(spec)
+      { sample: sample, spec: spec }
+    end
+
+    def analyse(spec)
+      Mulang.analyse analysis(spec)
+    end
   end
 end
