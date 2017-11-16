@@ -20,5 +20,17 @@ module Mulang
     def analyse(spec)
       Mulang.analyse analysis(spec)
     end
+
+    def self.native(language_name, content)
+      new Mulang::Language::Native.new(language_name), content
+    end
+
+    def self.external(content, &tool)
+      new Mulang::Language::External.new(&tool), content
+    end
+
+    def self.ast(ast)
+      new Mulang::Language::External.new, ast
+    end
   end
 end
