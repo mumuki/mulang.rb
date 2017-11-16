@@ -8,5 +8,8 @@
 /spec/reports/
 /tmp/
 
+# mulang
+/bin/mulang
+
 # rspec failure tracking
 .rspec_status
