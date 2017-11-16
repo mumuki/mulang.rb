@@ -1,8 +1,12 @@
+[![Build Status](https://travis-ci.org/mumuki/mulang.rb.svg?branch=master)](https://travis-ci.org/mumuki/mulang.rb)
+[![Code Climate](https://codeclimate.com/github/mumuki/mulang.rb/badges/gpa.svg)](https://codeclimate.com/github/mumuki/mulang.rb)
+[![Test Coverage](https://codeclimate.com/github/mumuki/mulang.rb/badges/coverage.svg)](https://codeclimate.com/github/mumuki/mulang.rb)
+[![Issue Count](https://codeclimate.com/github/mumuki/mulang.rb/badges/issue_count.svg)](https://codeclimate.com/github/mumuki/mulang.rb)
+
+
 # Mulang
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/mulang`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+> Ruby Gem Wrapper for the [mulang](github.com/mumuki/mulang) code anayzer.
 
 ## Installation
 
@@ -22,13 +26,51 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Basic analysis execution
+
+```ruby
+require 'mulang'
+
+Mulang.analyse sample: {
+                  tag: 'CodeSample',
+                  language: 'JavaScript',
+                  content: 'var x = 1'
+               },
+               spec: {
+                expectations: [],
+                smellsSet: {
+                  tag: 'NoSmells'
+                }
+              }
+# => {"tag"=>"AnalysisCompleted", "intermediateLanguage"=>nil, "signatures"=>[], "smells"=>[], "expectationResults"=>[]}
+```
+
+### Code manipulation
+
+```ruby
+code = Mulang::Code.new(Mulang::Language::Native.new('JavaScript'),  'var x = 1')
+
+# generate ast
+code.ast
+# => {"tag"=>"Variable", "contents"=>["x", {"tag"=>"MuNumber", "contents"=>1}]}
+
+code.analysis expectations: [], smellsSet: { tag: 'NoSmells' }
+# => {:sample=>{:tag=>"CodeSample", :language=>"JavaScript", :content=>"var x = 1"}, :spec=>{:expectations=>[], :smellsSet=>{:tag=>"NoSmells"}}}
+
+code.analyse expectations: [], smellsSet: { tag: 'NoSmells' }
+# => {"tag"=>"AnalysisCompleted", "intermediateLanguage"=>nil, "signatures"=>[], "smells"=>[], "expectationResults"=>[]}
+```
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version:
+
+1. update `VERSION` in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version
+2. ensure the `MULANG_VERSION` in `version.rb` points to an existing mulang tag
+3. commit the version change and tag the repository as `v$VERSION`
+4. push the repository and travis will do the rest :smile: - including pushing the gem file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
