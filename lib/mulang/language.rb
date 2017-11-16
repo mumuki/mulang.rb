@@ -26,7 +26,7 @@ module Mulang::Language
 
   class External
     def initialize(&tool)
-      @tool = tool
+      @tool = block_given? ? tool : proc { |it| it }
     end
 
     def ast(content)
