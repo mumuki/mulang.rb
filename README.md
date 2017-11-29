@@ -65,9 +65,19 @@ code.analyse expectations: [], smellsSet: { tag: 'NoSmells' }
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version:
+### Installing Locally
 
-1. update `VERSION` in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version
+To install this gem onto your local machine, run `bundle exec rake install`.
+
+### Updating Mulang version
+
+Edit `version.rb` with a new Mulang version, and then run `bin/setup` again.
+
+### Releasing a new version
+
+To release a new version:
+
+1. update `VERSION` in `version.rb`
 2. ensure the `MULANG_VERSION` in `version.rb` points to an existing mulang tag
 3. commit the version change and tag the repository as `v$VERSION`
 4. push the repository and travis will do the rest :smile: - including pushing the gem file to [rubygems.org](https://rubygems.org).
